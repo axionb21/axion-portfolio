@@ -1,0 +1,20 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="section-title">Dashboard</div>
+<div class="stats-grid">
+  {% for key, cfg in registry.items() %}
+  <div class="stat-card">
+    <div class="num">{{ counts[key] }}</div>
+    <div class="label">{{ cfg.label }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="section-title">Quick actions</div>
+<div class="btn-row" style="flex-wrap:wrap">
+  {% for key, cfg in registry.items() %}
+  <a class="btn btn-primary" href="{{ url_for('admin.edit_item', section=key) }}">+ new {{ cfg.label[:-1] if cfg.label.endswith('s') else cfg.label }}</a>
+  {% endfor %}
+</div>
+{% endblock %}

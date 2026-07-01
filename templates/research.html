@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Research{% endblock %}
+{% block content %}
+<div class="section-title">Research Papers</div>
+<div class="card-grid">
+  {% for r in items %}
+  <div class="card">
+    <div class="path">{{ r.status }}</div>
+    <h3>{{ r.title }}</h3>
+    <p>{{ r.abstract }}</p>
+    {% if r.pdf_url %}<a class="btn" href="{{ r.pdf_url }}" target="_blank">Download PDF</a>{% endif %}
+    {% if r.citation_text %}<p style="margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--text-dim)">{{ r.citation_text }}</p>{% endif %}
+  </div>
+  {% else %}
+  <p style="color:var(--text-dim)">No research papers published yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

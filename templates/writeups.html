@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Writeups{% endblock %}
+{% block content %}
+<div class="section-title">Writeups</div>
+
+<div class="filter-row">
+  <a href="{{ url_for('public.writeups') }}" class="{{ 'active' if not active_category }}">all</a>
+  {% for c in categories %}
+  <a href="{{ url_for('public.writeups', category=c) }}" class="{{ 'active' if active_category==c }}">{{ c|lower }}</a>
+  {% endfor %}
+</div>
+
+<div class="card-grid">
+  {% for w in items %}
+  <a class="card" href="{{ url_for('public.writeup_detail', slug=w.slug) }}">
+    <div class="path">/writeups/{{ w.slug }}</div>
+    <h3>{{ w.title }}</h3>
+    <p>{{ w.category or "" }}{% if w.ctf_event %} — {{ w.ctf_event }}{% endif %}</p>
+  </a>
+  {% else %}
+  <p style="color:var(--text-dim)">No writeups in this category yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

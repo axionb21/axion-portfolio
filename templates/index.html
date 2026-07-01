@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="hero">
+  <div class="boot-line">[ OK ] loading kernel modules...</div>
+  <div class="boot-line">[ OK ] mounting /writeups /research /labs...</div>
+  <div class="boot-line">[ OK ] session established — welcome back</div>
+  <h1>AXION B21</h1>
+  <div class="tagline">{{ settings.tagline if settings else "Ethical Hacker | Offensive Security Researcher | CTF Player" }}</div>
+  <div class="btn-row">
+    {% if settings and settings.resume_url %}
+      <a class="btn btn-primary" href="{{ settings.resume_url }}" target="_blank">Download Resume</a>
+    {% endif %}
+    <a class="btn" href="{{ url_for('public.projects') }}">View Projects</a>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card"><div class="num">{{ stats.projects }}</div><div class="label">Projects</div></div>
+  <div class="stat-card"><div class="num">{{ stats.writeups }}</div><div class="label">Writeups</div></div>
+  <div class="stat-card"><div class="num">{{ stats.research }}</div><div class="label">Research</div></div>
+  <div class="stat-card"><div class="num">{{ stats.blogs }}</div><div class="label">Blogs</div></div>
+  <div class="stat-card"><div class="num">{{ stats.certifications }}</div><div class="label">Certifications</div></div>
+</div>
+
+<div class="section-title">Recent Writeups</div>
+<div class="card-grid">
+  {% for w in recent_writeups %}
+  <a class="card" href="{{ url_for('public.writeup_detail', slug=w.slug) }}">
+    <div class="path">/writeups/{{ w.slug }}</div>
+    <h3>{{ w.title }}</h3>
+    <p>{{ w.category or "" }}{% if w.ctf_event %} — {{ w.ctf_event }}{% endif %}</p>
+  </a>
+  {% else %}
+  <p style="color:var(--text-dim)">No writeups published yet — add some from the admin panel.</p>
+  {% endfor %}
+</div>
+
+<div class="section-title">Recent Blogs</div>
+<div class="card-grid">
+  {% for b in recent_blogs %}
+  <a class="card" href="{{ url_for('public.blog_detail', slug=b.slug) }}">
+    {% if b.cover_image_url %}<img src="{{ b.cover_image_url }}" alt="">{% endif %}
+    <h3>{{ b.title }}</h3>
+    <p>{{ b.published_at.strftime('%b %d, %Y') if b.published_at else "" }}</p>
+  </a>
+  {% else %}
+  <p style="color:var(--text-dim)">No blog posts yet.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Certifications{% endblock %}
+{% block content %}
+<div class="section-title">Certifications</div>
+<div class="card-grid">
+  {% for c in items %}
+  <div class="card">
+    {% if c.badge_image_url %}<img src="{{ c.badge_image_url }}" alt="{{ c.name }}" style="max-width:80px;">{% endif %}
+    <h3>{{ c.name }}</h3>
+    <p>{{ c.issuer }}{% if c.date_earned %} — {{ c.date_earned }}{% endif %}</p>
+    {% if c.credential_url %}<a class="btn" href="{{ c.credential_url }}" target="_blank">Verify</a>{% endif %}
+  </div>
+  {% else %}
+  <p style="color:var(--text-dim)">No certifications added yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

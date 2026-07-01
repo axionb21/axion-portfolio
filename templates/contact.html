@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<div class="section-title">Contact</div>
+<div class="card" style="max-width:420px">
+  {% if settings.email %}<p><strong>Email</strong><br><a href="mailto:{{ settings.email }}">{{ settings.email }}</a></p>{% endif %}
+  {% if settings.github_url %}<p><strong>GitHub</strong><br><a href="{{ settings.github_url }}" target="_blank">{{ settings.github_url }}</a></p>{% endif %}
+  {% if settings.linkedin_url %}<p><strong>LinkedIn</strong><br><a href="{{ settings.linkedin_url }}" target="_blank">{{ settings.linkedin_url }}</a></p>{% endif %}
+  {% if settings.twitter_url %}<p><strong>Twitter</strong><br><a href="{{ settings.twitter_url }}" target="_blank">{{ settings.twitter_url }}</a></p>{% endif %}
+  {% if settings.discord_handle %}<p><strong>Discord</strong><br>{{ settings.discord_handle }}</p>{% endif %}
+  {% if settings.location %}<p><strong>Location</strong><br>{{ settings.location }}</p>{% endif %}
+</div>
+{% endblock %}

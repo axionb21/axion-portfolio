@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+{% block content %}
+<div class="section-title">Projects</div>
+<div class="card-grid">
+  {% for p in items %}
+  <div class="card">
+    {% if p.image_url %}<img src="{{ p.image_url }}" alt="{{ p.title }}">{% endif %}
+    {% if p.category %}<div class="path">{{ p.category }}</div>{% endif %}
+    <h3>{{ p.title }}</h3>
+    <p>{{ p.description }}</p>
+    <div>
+      {% for tag in p.tag_list() %}<span class="tag">{{ tag }}</span>{% endfor %}
+    </div>
+    <div class="btn-row" style="margin-top:12px">
+      {% if p.github_url %}<a class="btn" href="{{ p.github_url }}" target="_blank">GitHub</a>{% endif %}
+      {% if p.live_demo_url %}<a class="btn" href="{{ p.live_demo_url }}" target="_blank">Live Demo</a>{% endif %}
+    </div>
+  </div>
+  {% else %}
+  <p style="color:var(--text-dim)">No projects added yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

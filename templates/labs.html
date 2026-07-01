@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Labs{% endblock %}
+{% block content %}
+<div class="section-title">Personal Labs</div>
+<div class="card-grid">
+  {% for l in items %}
+  <div class="card">
+    <div class="path">{{ l.status }}</div>
+    <h3>{{ l.name }}</h3>
+    <p>{{ l.description }}</p>
+  </div>
+  {% else %}
+  <p style="color:var(--text-dim)">No labs added yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

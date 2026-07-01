@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AXION B21{% endblock %} // Offensive Security Portfolio</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">AXION_B21</div>
+      <div class="brand-sub">offensive security portfolio</div>
+      <nav>
+        <a href="{{ url_for('public.index') }}" class="{{ 'active' if request.endpoint=='public.index' }}">home</a>
+        <a href="{{ url_for('public.projects') }}" class="{{ 'active' if request.endpoint=='public.projects' }}">projects</a>
+        <a href="{{ url_for('public.writeups') }}" class="{{ 'active' if 'writeup' in request.endpoint }}">writeups</a>
+        <a href="{{ url_for('public.research') }}" class="{{ 'active' if request.endpoint=='public.research' }}">research</a>
+        <a href="{{ url_for('public.blogs') }}" class="{{ 'active' if 'blog' in request.endpoint }}">blogs</a>
+        <a href="{{ url_for('public.labs') }}" class="{{ 'active' if request.endpoint=='public.labs' }}">labs</a>
+        <a href="{{ url_for('public.certifications') }}" class="{{ 'active' if request.endpoint=='public.certifications' }}">certifications</a>
+        <a href="{{ url_for('public.contact') }}" class="{{ 'active' if request.endpoint=='public.contact' }}">contact</a>
+      </nav>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <div class="breadcrumb">/{{ request.path.strip('/') or '' }}</div>
+        <div class="status"><span class="dot"></span>ONLINE</div>
+      </div>
+
+      <div class="content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+      </div>
+
+      <div class="footer">AXION B21 — Building Secure Systems Through Offensive Thinking. © 2026</div>
+    </div>
+  </div>
+
+  <div id="terminal-widget">
+    <button id="terminal-toggle" class="mono">&gt; AXION_Terminal</button>
+    <div id="terminal-body">
+      <div id="terminal-output"></div>
+      <div id="terminal-input-row">
+        <span>$</span>
+        <input id="terminal-input" type="text" autocomplete="off" placeholder="type a command...">
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/terminal.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

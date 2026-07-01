@@ -1,0 +1,25 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ cfg.label }}{% endblock %}
+{% block content %}
+<div class="section-title">{{ cfg.label }}</div>
+<a class="btn btn-primary" href="{{ url_for('admin.edit_item', section=section) }}">+ new</a>
+
+<table class="admin-table">
+  <thead><tr><th>{{ cfg.list_display }}</th><th style="width:180px">actions</th></tr></thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <td>{{ getattr(item, cfg.list_display) }}</td>
+      <td>
+        <a class="btn" href="{{ url_for('admin.edit_item', section=section, item_id=item.id) }}">edit</a>
+        <form method="POST" action="{{ url_for('admin.delete_item', section=section, item_id=item.id) }}" style="display:inline" onsubmit="return confirm('Delete this permanently?');">
+          <button class="btn btn-danger" type="submit">delete</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="2" style="color:var(--text-dim)">Nothing here yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

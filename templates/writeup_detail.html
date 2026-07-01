@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ item.title }}{% endblock %}
+{% block content %}
+<div class="detail-header">
+  <div class="breadcrumb">/writeups/{{ item.slug }}</div>
+  <h1>{{ item.title }}</h1>
+  <p style="color:var(--text-dim)">{{ item.category or "" }}{% if item.ctf_event %} — {{ item.ctf_event }}{% endif %}</p>
+  {% if item.file_url %}<a class="btn" href="{{ item.file_url }}" target="_blank">Download attached file</a>{% endif %}
+</div>
+<div class="markdown-body">{{ html_content | safe }}</div>
+{% endblock %}

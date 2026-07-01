@@ -1,0 +1,38 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ cfg.label }}{% endblock %}
+{% block content %}
+<div class="section-title">{{ "Edit" if item.id else "New" }} {{ cfg.label }}</div>
+
+<form method="POST" enctype="multipart/form-data" style="max-width:640px">
+  {% for field_name, field_type in cfg.fields %}
+  <div class="form-group">
+    <label>{{ field_name.replace('_', ' ') }}</label>
+
+    {% if field_type == 'textarea' %}
+      <textarea name="{{ field_name }}">{{ getattr(item, field_name) or '' }}</textarea>
+
+    {% elif field_type == 'file' %}
+      {% set current_url = getattr(item, cfg.file_field_map[field_name]) if item.id else None %}
+      {% if current_url %}
+        <p style="margin:0 0 8px"><a href="{{ current_url }}" target="_blank" style="font-size:12px">current file ↗</a></p>
+      {% endif %}
+      <input type="file" name="{{ field_name }}">
+
+    {% elif field_type.startswith('select:') %}
+      {% set options = field_type.split(':')[1].split(',') %}
+      <select name="{{ field_name }}">
+        {% for opt in options %}
+        <option value="{{ opt }}" {{ 'selected' if getattr(item, field_name) == opt }}>{{ opt }}</option>
+        {% endfor %}
+      </select>
+
+    {% else %}
+      <input type="text" name="{{ field_name }}" value="{{ getattr(item, field_name) or '' }}">
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <button class="btn btn-primary" type="submit">Save</button>
+  <a class="btn" href="{{ url_for('admin.list_items', section=section) }}">Cancel</a>
+</form>
+{% endblock %}
